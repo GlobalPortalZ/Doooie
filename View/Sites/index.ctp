@@ -3,17 +3,24 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('subject_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('url'); ?></th>
+			<th><?php echo $this->Paginator->sort('title'); ?></th>
+			<th><?php echo $this->Paginator->sort('description'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($sites as $site): ?>
 	<tr>
 		<td><?php echo h($site['Site']['id']); ?>&nbsp;</td>
+		
 		<td>
-			<?php echo $this->Html->link($site['User']['id'], array('controller' => 'users', 'action' => 'view', $site['User']['id'])); ?>
+			<?php echo $this->Html->link($site['Subject']['title'], array('controller' => 'subjects', 'action' => 'view', $site['Subject']['id'])); ?>
 		</td>
-		<td><?php echo h($site['Site']['url']); ?>&nbsp;</td>
+		<td>
+			<a href="<?php echo $site['Site']['url']?>" target="_blank"><?php echo $site['Site']['url']?></a>
+		</td>
+		<td><?php echo h($site['Site']['title']); ?>&nbsp;</td>
+		<td><?php echo h($site['Site']['description']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $site['Site']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $site['Site']['id'])); ?>
@@ -40,7 +47,7 @@
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('New Site'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Subjects'), array('controller' => 'subjects', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Subject'), array('controller' => 'subjects', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

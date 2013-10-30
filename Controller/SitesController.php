@@ -15,6 +15,47 @@ class SitesController extends AppController {
  */
 	public $components = array('Paginator');
 
+
+
+
+	public function beforeFilter() {
+    	parent::beforeFilter();
+
+    	$this->Auth->allow('bookmarklet');
+
+	}
+	public function bkmkiframe() {
+		$this->layout = 'js';
+		if ($this->request->is('post')) {
+			$this->Site->create();
+			if ($this->Site->save($this->request->data)) {
+				$this->Session->setFlash(__('The site has been saved.'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The site could not be saved. Please, try again.'));
+			}
+		}
+		$subjects = $this->Site->Subject->find('list');
+		$this->set(compact('subjects'));
+	}
+
+	public function test(){
+		
+		// $this->set('',$this->Auth->user());
+		// $this->layout = 'js';
+		// debug($_POST['title'];);
+	}
+
+	public function jstest(){
+		$this->layout = 'js';
+		$this->set('user',$this->Auth->user());
+	}
+
+	public function bookmarklet(){
+		$this->layout = 'js';
+		$this->set('user',$this->Auth->user());
+	}
+
 /**
  * index method
  *
@@ -46,17 +87,18 @@ class SitesController extends AppController {
  * @return void
  */
 	public function add() {
+		// $this->layout = 'js';
 		if ($this->request->is('post')) {
 			$this->Site->create();
 			if ($this->Site->save($this->request->data)) {
 				$this->Session->setFlash(__('The site has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				// return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The site could not be saved. Please, try again.'));
 			}
 		}
-		$users = $this->Site->User->find('list');
-		$this->set(compact('users'));
+		$subjects = $this->Site->Subject->find('list');
+		$this->set(compact('subjects'));
 	}
 
 /**

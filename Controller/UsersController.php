@@ -15,6 +15,68 @@ class UsersController extends AppController {
  */
 	public $components = array('Paginator');
 
+	
+	public function beforeFilter() {
+    parent::beforeFilter();
+    $this->Auth->allow('initDB'); // We can remove this line after we're finished
+	}	
+
+	public function initDB() {
+	    $group = $this->User->Group;
+	    //Allow admins to everything
+	    $group->id = 1;
+	    $this->Acl->allow($group, 'controllers');
+
+	    //allow managers to posts and widgets
+	    $group->id = 2;
+	    $this->Acl->deny($group, 'controllers');
+	    $this->Acl->allow($group, 'controllers/Widgets/add');
+
+	    //allow users to only add and edit on posts and widgets
+	    // $group->id = 3;
+	    // $this->Acl->deny($group, 'controllers');
+	    // $this->Acl->allow($group, 'controllers/Posts/add');
+	    // $this->Acl->allow($group, 'controllers/Posts/edit');
+	    // $this->Acl->allow($group, 'controllers/Widgets/add');
+	    // $this->Acl->allow($group, 'controllers/Widgets/edit');
+	    //we add an exit to avoid an ugly "missing views" error message
+	    echo "all done";
+	    exit;
+	}
+
+public function testform(){
+	
+
+}
+
+public function login() {
+	// if ($this->Session->read('Auth.User')) {
+ //        $this->Session->setFlash('You are logged in!');
+ //        return $this->redirect('/');
+ //    }
+    if ($this->request->is('post')) {
+        if ($this->Auth->login()) {
+            return $this->redirect($this->Auth->redirect());
+        }
+        $this->Session->setFlash(__('Your username or password was incorrect.'));
+    }
+}
+public function bkmklogin() {
+    if ($this->request->is('post')) {
+        if ($this->Auth->login()) {
+            // return $this->redirect($this->Auth->redirect());
+        }
+        $this->Session->setFlash(__('Your username or password was incorrect.'));
+}
+}
+
+public function logout() {
+    $this->Session->setFlash('Good-Bye');
+	$this->redirect($this->Auth->logout());
+}
+
+
+
 /**
  * index method
  *
@@ -55,6 +117,8 @@ class UsersController extends AppController {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
 		}
+		$groups = $this->User->Group->find('list');
+		$this->set(compact('groups'));
 	}
 
 /**
@@ -79,6 +143,8 @@ class UsersController extends AppController {
 			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
 			$this->request->data = $this->User->find('first', $options);
 		}
+		$groups = $this->User->Group->find('list');
+		$this->set(compact('groups'));
 	}
 
 /**

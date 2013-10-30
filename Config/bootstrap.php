@@ -62,7 +62,7 @@ Cache::config('default', array('engine' => 'File'));
  * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
  *
  */
-
+CakePlugin::loadAll(); // Loads all plugins at once
 /**
  * You can attach event listeners to the request lifecycle as Dispatcher Filter . By Default CakePHP bundles two filters:
  *
@@ -98,3 +98,15 @@ CakeLog::config('error', array(
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
+
+
+// $config['Bookmarklet'] = array(
+//        'title' => "drag this to your browser's bookmarks bar",
+//        'text'  => 'Post it!', //text displayed
+//        'class' => null, //css class to style the link
+//        'destination' => array('controller' => 'posts','action' => 'bookmarklet'), //HtmlHelper::link() compatible target url - array or string
+       
+//        'html_version' => true // if false grab only the selected (plain) text, default grab the selected portion as original html
+//     );
+  
+   // Configure::write('Bookmarklet',$config['Bookmarklet']);

@@ -14,7 +14,9 @@ class UserTest extends CakeTestCase {
  */
 	public $fixtures = array(
 		'app.user',
-		'app.site'
+		'app.group',
+		'app.site',
+		'app.subject'
 	);
 
 /**
@@ -36,6 +38,22 @@ class UserTest extends CakeTestCase {
 		unset($this->User);
 
 		parent::tearDown();
+	}
+
+/**
+ * testParentNode method
+ *
+ * @return void
+ */
+	public function testParentNode() {
+	}
+
+/**
+ * testBindNode method
+ *
+ * @return void
+ */
+	public function testBindNode() {
 	}
 
 }
